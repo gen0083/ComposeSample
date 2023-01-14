@@ -29,8 +29,8 @@ fun NormalColumnLayout(
 ) {
     Column(
         modifier = modifier
-            .clip(RoundedCornerShape(8.dp))
             .shadow(4.dp)
+            .clip(RoundedCornerShape(8.dp))
             .background(Color.White)
             .padding(8.dp)
     ) {
