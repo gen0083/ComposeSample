@@ -3,11 +3,15 @@ package jp.gcreate.sample.composesample.ui.customlayout
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.layout.Placeable
@@ -25,9 +29,24 @@ fun LayoutSample(
     Layout(
         modifier = modifier,
         content = {
-            Text(text = "abc")
-            Text(text = "1234567890")
-            Text(text = "あいうえお")
+            Text(
+                text = "abc",
+                modifier = Modifier.width(48.dp),
+            )
+            Text(
+                text = "1234567890",
+                modifier = Modifier.width(24.dp)
+            )
+            Text(
+                text = "あいうえお",
+                modifier = Modifier
+                    .background(Color.White)
+                    .padding(4.dp)
+                    .clip(RoundedCornerShape(8.dp))
+                    .background(Color.Blue)
+                    .padding(8.dp),
+                color = Color.White,
+            )
             Box(
                 modifier = Modifier
                     .size(170.dp)
@@ -44,22 +63,24 @@ fun LayoutSample(
             // measurableはこいつの中にある子要素ってことだろう
             // constraintsは成約、minHeightやらmaxHeightやらそういうサイズを決定する上での制約を持ってると思われる
             // 具体的にどんな値がくるんだ？
-            Log.d("LayoutSample", "measurable=$measurables, constraints=$constraints")
+            // constraintsはLayout全体が取れる領域のサイズを表す
+            // Modifier.width/heightで値が指定されるとmin/maxともにその値になる
+            Log.d("LayoutSample", "constraints=$constraints")
             var height = 0
-            val placables = mutableListOf<Placeable>()
+            val placeables = mutableListOf<Placeable>()
             for ((i, m) in measurables.withIndex()) {
                 val measured = m.measure(constraints)
                 height = max(height, measured.height)
-                placables.add(measured)
+                placeables.add(measured)
             }
 
             layout(constraints.maxWidth, height) {
                 var positionX = constraints.maxWidth
                 val padding = 8.dp.toPx().toInt()
                 var positionY = 0
-                for ((i, p) in placables.withIndex()) {
+                for ((i, p) in placeables.withIndex()) {
                     Log.d(
-                        "LayoutPlacable",
+                        "LayoutPlaceable",
                         "$p child$i ${p.height}/${p.measuredHeight} ${p.width}/${p.measuredWidth}"
                     )
                     positionX -= p.width + padding
