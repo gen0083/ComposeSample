@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import jp.gcreate.sample.composesample.ui.column.ColumnScreen
+import jp.gcreate.sample.composesample.ui.customlayout.CustomLayoutScreen
 import jp.gcreate.sample.composesample.ui.theme.ComposeSampleTheme
 
 class MainActivity : ComponentActivity() {
@@ -25,7 +26,7 @@ class MainActivity : ComponentActivity() {
                 Column(
                     modifier = Modifier.background(Color(0xFFcfcdc9)),
                 ) {
-                    ColumnScreen()
+                    CustomLayoutScreen()
                 }
             }
         }
